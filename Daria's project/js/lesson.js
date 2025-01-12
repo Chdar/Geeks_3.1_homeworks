@@ -15,3 +15,20 @@ phoneButton.onclick = () => {
         phoneResult.style.color = 'red'
     }
 }
+
+// TAB SLIDER
+
+const tabContentBlocks = document.querySelectorAll('.tab_content_block')
+const tabContentItems = document.querySelectorAll('.tab_content_item')
+
+const hideTabContent = () => {
+    tabContentBlocks.forEach(item => {
+        item.style.display = 'none'
+    })
+}
+
+const showTabContent = (i) => {
+
+}
+
+hideTabContent()
