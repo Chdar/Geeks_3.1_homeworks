@@ -100,3 +100,55 @@ resetButton.onclick = () => {
     countSeconds = 0
     seconds.innerHTML = countSeconds
 }
+
+// CHARACTERS JSON
+fetch('/data/characters.json')
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Ошибка загрузки данных');
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log('Данные персонажей:', data); // Вывод в консоль
+    displayCharacters(data);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+function displayCharacters(characters) {
+  const charactersList = document.querySelector('.characters-list');
+  charactersList.innerHTML = '';
+
+  characters.forEach((character) => {
+    const card = document.createElement('div');
+    card.className = 'character-card';
+
+    card.innerHTML = `
+      <div class="character-photo">
+        <img src="${character.character_photo}" alt="${character.name}">
+      </div>
+      <h2>${character.name}</h2>
+      <p>Age: ${character.age}</p>
+    `;
+
+    charactersList.appendChild(card);
+  });
+}
+
+// ANY JSON
+
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '/data/any.json', true);
+
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    const data = JSON.parse(xhr.responseText);
+    console.log(data);
+  } else {
+    console.error('Ошибка при загрузке данных: ' + xhr.status);
+  }
+};
+
+xhr.send();

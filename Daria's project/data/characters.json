@@ -1,0 +1,17 @@
+[
+    {
+      "name": "Harry Potter",
+      "age": 17,
+      "character_photo": "https://static1.srcdn.com/wordpress/wp-content/uploads/2016/10/Daniel-Radcliffe-as-Harry-Potter.jpg"
+    },
+    {
+      "name": "Hermione Granger",
+      "age": 17,
+      "character_photo": "https://marvelousgeeksmedia.com/wp-content/uploads/2021/07/Hermione-Pozione-Polisucco-Harry-Potter-scaled-2.jpeg"
+    },
+    {
+      "name": "Ron Weasley",
+      "age": 17,
+      "character_photo": "https://images.immediate.co.uk/production/volatile/sites/3/2016/05/108890.jpg?quality=90&resize=882,588"
+    }
+  ]
