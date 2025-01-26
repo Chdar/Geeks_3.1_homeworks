@@ -62,3 +62,63 @@ setInterval(autoSwitchTabs, 3000);
 //         })
 //     }
 // }
+
+// CONVERTER
+
+const somInput = document.querySelector('#som');
+const usdInput = document.querySelector('#usd');
+const eurInput = document.querySelector('#eur');
+
+const converter = (element, targetElements) => {
+    element.oninput = () => {
+        const request = new XMLHttpRequest();
+        request.open('GET', '../data/converter.json');
+        request.setRequestHeader('Content-type', 'application/json');
+        request.send();
+
+        request.onload = () => {
+            if (request.status === 200) {
+                const data = JSON.parse(request.response);
+
+                if (element.id === 'som') {
+                    targetElements.usd.value = (element.value / data.usd).toFixed(2);
+                    targetElements.eur.value = (element.value / data.eur).toFixed(2);
+                }
+                if (element.id === 'usd') {
+                    targetElements.som.value = (element.value * data.usd).toFixed(2);
+                    targetElements.eur.value = ((element.value * data.usd) / data.eur).toFixed(2);
+                }
+                if (element.id === 'eur') {
+                    targetElements.som.value = (element.value * data.eur).toFixed(2);
+                    targetElements.usd.value = ((element.value * data.eur) / data.usd).toFixed(2);
+                }
+
+                if (element.value === '') {
+                    targetElements.som.value = '';
+                    targetElements.usd.value = '';
+                    targetElements.eur.value = '';
+                }
+            }
+        };
+    };
+};
+
+converter(somInput, { usd: usdInput, eur: eurInput });
+converter(usdInput, { som: somInput, eur: eurInput });
+converter(eurInput, { som: somInput, usd: usdInput });
+
+
+// не сокращенная версия:
+// somInput.oninput = () => {
+//     const request = new XMLHttpRequest
+//     request.open('GET', '../data/converter.json')
+//     request.setRequestHeader ('Content-type','application/json')
+//     request.send ()
+
+//     request.onload = () => {
+//         const data = JSON.parse(request.response)
+//         usdInput.value = (somInput.value / data.usd).toFixed(2)
+//     }
+// }
+
+
