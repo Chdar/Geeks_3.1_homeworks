@@ -121,4 +121,59 @@ converter(eurInput, { som: somInput, usd: usdInput });
 //     }
 // }
 
+// CARD SWITCHER
 
+const btnNext = document.querySelector('#btn-next')
+const btnPrev = document.querySelector('#btn-prev')
+const cardBlock = document.querySelector('.card')
+
+let todoId = 1;
+
+const updateCard = (id) => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            cardBlock.innerHTML = `
+                <p>${data.title}</p>
+                <p>${data.completed ? 'Yes' : 'No'}</p>
+                <span>${data.id}</span>
+            `;
+        })
+        .catch(error => {
+            cardBlock.innerHTML = `<p>Ошибка: ${error.message}</p>`;
+        });
+};
+
+const changeCard = (direction) => {
+    if (direction === 'next') {
+        todoId = todoId === 200 ? 1 : todoId + 1;
+    } else if (direction === 'prev') {
+        todoId = todoId === 1 ? 200 : todoId - 1; 
+    }
+    updateCard(todoId);
+};
+
+btnNext.onclick = () => changeCard('next');
+btnPrev.onclick = () => changeCard('prev');
+
+updateCard(todoId);
+
+// Дополнительный запрос для posts
+fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Posts data:', data);
+    })
+    .catch(error => {
+        console.error('Ошибка при загрузке posts:', error.message);
+    });
