@@ -101,54 +101,111 @@ resetButton.onclick = () => {
     seconds.innerHTML = countSeconds
 }
 
-// CHARACTERS JSON
-fetch('/data/characters.json')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Ошибка загрузки данных');
-    }
-    return response.json();
-  })
-  .then((data) => {
-    console.log('Данные персонажей:', data); // Вывод в консоль
-    displayCharacters(data);
-  })
-  .catch((error) => {
-    console.error('Ошибка:', error);
-  });
+// CHARACTERS JSON NEW с использованием async/await
+
+async function loadCharacters() {
+  try {
+      const response = await fetch('/data/characters.json');
+      if (!response.ok) {
+          throw new Error('Ошибка загрузки данных');
+      }
+      const data = await response.json();
+      console.log('Данные персонажей:', data);
+      displayCharacters(data);
+  } catch (error) {
+      console.error('Ошибка:', error);
+  }
+}
 
 function displayCharacters(characters) {
   const charactersList = document.querySelector('.characters-list');
   charactersList.innerHTML = '';
 
   characters.forEach((character) => {
-    const card = document.createElement('div');
-    card.className = 'character-card';
+      const card = document.createElement('div');
+      card.className = 'character-card';
 
-    card.innerHTML = `
-      <div class="character-photo">
-        <img src="${character.character_photo}" alt="${character.name}">
-      </div>
-      <h2>${character.name}</h2>
-      <p>Age: ${character.age}</p>
-    `;
+      card.innerHTML = `
+          <div class="character-photo">
+              <img src="${character.character_photo}" alt="${character.name}">
+          </div>
+          <h2>${character.name}</h2>
+          <p>Age: ${character.age}</p>
+      `;
 
-    charactersList.appendChild(card);
+      charactersList.appendChild(card);
   });
 }
 
-// ANY JSON
+loadCharacters();
 
-const xhr = new XMLHttpRequest();
-xhr.open('GET', '/data/any.json', true);
 
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    const data = JSON.parse(xhr.responseText);
-    console.log(data);
-  } else {
-    console.error('Ошибка при загрузке данных: ' + xhr.status);
+// // CHARACTERS JSON
+// fetch('/data/characters.json')
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error('Ошибка загрузки данных');
+//     }
+//     return response.json();
+//   })
+//   .then((data) => {
+//     console.log('Данные персонажей:', data); // Вывод в консоль
+//     displayCharacters(data);
+//   })
+//   .catch((error) => {
+//     console.error('Ошибка:', error);
+//   });
+
+// function displayCharacters(characters) {
+//   const charactersList = document.querySelector('.characters-list');
+//   charactersList.innerHTML = '';
+
+//   characters.forEach((character) => {
+//     const card = document.createElement('div');
+//     card.className = 'character-card';
+
+//     card.innerHTML = `
+//       <div class="character-photo">
+//         <img src="${character.character_photo}" alt="${character.name}">
+//       </div>
+//       <h2>${character.name}</h2>
+//       <p>Age: ${character.age}</p>
+//     `;
+
+//     charactersList.appendChild(card);
+//   });
+// }
+
+// ANY JSON NEW с использованием fetch
+
+async function loadAnyData() {
+  try {
+      const response = await fetch('/data/any.json');
+      if (!response.ok) {
+          throw new Error('Ошибка загрузки данных');
+      }
+      const data = await response.json();
+      console.log('Данные:', data);
+  } catch (error) {
+      console.error('Ошибка:', error);
   }
-};
+}
 
-xhr.send();
+loadAnyData();
+
+
+// // ANY JSON
+
+// const xhr = new XMLHttpRequest();
+// xhr.open('GET', '/data/any.json', true);
+
+// xhr.onload = function() {
+//   if (xhr.status === 200) {
+//     const data = JSON.parse(xhr.responseText);
+//     console.log(data);
+//   } else {
+//     console.error('Ошибка при загрузке данных: ' + xhr.status);
+//   }
+// };
+
+// xhr.send();

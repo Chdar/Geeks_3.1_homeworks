@@ -1,0 +1,42 @@
+.cards_block h2 {
+    padding: 100px 0;
+}
+
+.cards_block {
+    padding: 100px 0;
+    background-color: #000000;
+}
+
+.cards-container {
+    background-color: black;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 250px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #666;
+}
